@@ -38,7 +38,7 @@ class MediaWrapper: AudioPlayerDelegate {
     }
     
     var currentQueue: [[String: Any]] {
-        let tracks = [[String: Any]]()
+        var tracks = [[String: Any]]()
 
         for track: Track in queue {
             tracks.append(track.toObject())
