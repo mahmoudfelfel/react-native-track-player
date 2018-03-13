@@ -3,7 +3,6 @@ import groovy.json.JsonSlurper
 buildscript {
     repositories {
         jcenter()
-        google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
@@ -58,7 +57,6 @@ repositories {
     }
     mavenCentral()
     jcenter()
-    google()
 }
 
 dependencies {
