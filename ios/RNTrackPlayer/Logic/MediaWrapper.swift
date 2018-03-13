@@ -37,8 +37,14 @@ class MediaWrapper: AudioPlayerDelegate {
         return queue.indices.contains(0) ? queue[currentIndex] : nil
     }
     
-    var currentQueue: [Track] {
-        return queue
+    var currentQueue: [[String: Any]] {
+        let tracks = [[String: Any]]()
+
+        for track: Track in queue {
+            tracks.append(track.toObject())
+        }
+
+        return tracks
     }
     
     var bufferedPosition: Double {
