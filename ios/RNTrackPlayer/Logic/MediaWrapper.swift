@@ -49,6 +49,16 @@ class MediaWrapper: AudioPlayerDelegate {
         return queue[safe: currentIndex]
     }
     
+    var currentQueue: [[String: Any]] {
+        var tracks = [[String: Any]]()
+
+        for track: Track in queue {
+            tracks.append(track.toObject())
+        }
+
+        return tracks
+    }
+    
     var bufferedPosition: Double {
         return player.currentItemLoadedRange?.latest ?? 0
     }
