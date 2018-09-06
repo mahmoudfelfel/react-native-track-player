@@ -39,8 +39,7 @@ public class MediaManager {
 
         this.focus = new FocusManager(service, metadata);
 
-        //TODO
-        //service.setSessionToken(metadata.getToken());
+        service.setSessionToken(metadata.getToken());
 
         PowerManager powerManager = (PowerManager)service.getSystemService(Context.POWER_SERVICE);
         wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "track-playback-wake-lock");
