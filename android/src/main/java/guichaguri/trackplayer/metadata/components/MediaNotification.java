@@ -8,9 +8,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Action;
+import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
@@ -19,6 +22,7 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v4.media.app.NotificationCompat.MediaStyle;
 import android.util.Log;
+import android.view.KeyEvent;
 import guichaguri.trackplayer.R;
 import guichaguri.trackplayer.logic.Utils;
 import java.util.ArrayList;
@@ -67,11 +71,9 @@ public class MediaNotification {
     public MediaNotification(Context context, MediaSessionCompat session) {
         this.context = context;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createChannel(context);
-        }
+        if(VERSION.SDK_INT >= VERSION_CODES.O) createChannel();
 
-        this.nb = new NotificationCompat.Builder(context, CHANNEL_ID);
+        this.nb = new Builder(context, "trackplayer");
         this.style = new MediaStyle().setMediaSession(session.getSessionToken());
 
         nb.setStyle(style);
@@ -93,6 +95,17 @@ public class MediaNotification {
         forwardIcon = R.drawable.forward;
 
         nb.setSmallIcon(playIcon);
+    }
+
+    @RequiresApi(VERSION_CODES.O)
+    private void createChannel() {
+        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        NotificationChannel channel = new NotificationChannel("trackplayer", "Media controls", NotificationManager.IMPORTANCE_LOW);
+        channel.setLockscreenVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        channel.setDescription("Media player controls");
+        channel.setShowBadge(true);
+        mNotificationManager.createNotificationChannel(channel);
     }
 
     @SuppressWarnings("ResourceAsColor")
